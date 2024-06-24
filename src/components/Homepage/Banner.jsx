@@ -4,7 +4,7 @@ import React from 'react';
 const Banner = () => {
     return (
         <div className='container mx-auto'>
-            <div className="carousel w-full mt-8">
+            <div className="carousel w-full">
                 {
                     banners.map((banner, index) => (
                         <div
