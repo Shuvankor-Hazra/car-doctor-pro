@@ -11,7 +11,7 @@ const CheckoutPage = ({ params }) => {
 
     const loadService = async () => {
         const details = await getServicesDetails(params.id);
-        setService(details);
+        setService(details.service);
     }
     const { title, description, facility, price, img, _id } = service || {};
 
