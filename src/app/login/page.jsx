@@ -8,8 +8,8 @@ import SocialSignin from '@/components/shared/SocialSignin';
 import Swal from 'sweetalert2';
 
 const Page = () => {
-    const router = useRouter()
     const searchParams = useSearchParams();
+    const router = useRouter()
     const path = searchParams.get('redirect')
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -50,7 +50,8 @@ const Page = () => {
                     <div className='flex flex-col items-center'>
                         <h6 className='my-6 font-semibold'>Or Sign In with</h6>
                         <SocialSignin />
-                        <h6 className='mt-10 font-medium'>Don{"'"}t Have an account? <Link href={'/signup'} className='text-primary font-bold'>Sign Up</Link></h6>
+                        <h6 className='mt-10 font-medium'>Do not Have an account?
+                            <Link href={'/signup'} className='text-primary font-bold'>Sign Up</Link></h6>
                     </div>
                 </div>
             </div>

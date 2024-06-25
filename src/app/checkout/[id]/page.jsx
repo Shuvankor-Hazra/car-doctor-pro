@@ -1,5 +1,6 @@
 'use client'
 import { getServicesDetails } from '@/services/getServices';
+import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +12,6 @@ const CheckoutPage = ({ params }) => {
 
     const loadService = async () => {
         const details = await getServicesDetails(params.id);
-        console.log(details);
         setService(details);
     }
     const { title, description, facility, price, img, _id } = service || {};
@@ -29,14 +29,8 @@ const CheckoutPage = ({ params }) => {
             serviceId: _id,
 
         }
-        const resp = await fetch('http://localhost:3000/checkout/api/new-booking', {
-            method: "POST",
-            body: JSON.stringify(newBooking),
-            headers: {
-                "content-type": 'application/json'
-            }
-        });
-        const response = await resp?.json();
+        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout/api/new-booking`, newBooking);
+        const response = await resp.data;
         Swal.fire({
             icon: "success",
             title: "Your booking has been saved",

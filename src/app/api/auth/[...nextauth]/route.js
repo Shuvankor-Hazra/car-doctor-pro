@@ -11,7 +11,7 @@ const handler = NextAuth({
   session: {
     strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
-    // rolling: false,
+    rolling: false,
   },
   providers: [
     CredentialsProvider({
@@ -57,7 +57,6 @@ const handler = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      console.log(account);
       if (
         account.provider === "google" ||
         account.provider === "github" ||
@@ -80,7 +79,6 @@ const handler = NextAuth({
       } else {
         return user;
       }
-      // return true
     },
   },
 });

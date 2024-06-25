@@ -1,4 +1,5 @@
 'use client'
+import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -9,8 +10,8 @@ const Page = ({ params }) => {
     const [booking, setBooking] = useState([]);
 
     const loadBookings = async () => {
-        const bookingDetail = await fetch(`http://localhost:3000/my-bookings/api/booking/${params.id}`)
-        const data = await bookingDetail.json();
+        const bookingDetail = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/booking/${params.id}`)
+        const data = await bookingDetail.data;
         setBooking(data.data)
     }
 
@@ -21,21 +22,15 @@ const Page = ({ params }) => {
             phone: e.target.phone.value,
             address: e.target.address.value,
         }
-        const resp = await fetch(`http://localhost:3000/my-bookings/api/booking/${params.id}`, {
-            method: 'PATCH',
-            body: JSON.stringify(updatedBooking),
-            headers: {
-                'content-type': 'application/json'
-            }
-        })
-        if(resp.status===200){
+        const resp = await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/booking/${params.id}`, updatedBooking)
+        if (resp.status === 200) {
             Swal.fire({
                 position: "top",
                 icon: "success",
                 title: "Update Successful",
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
         }
     }
 

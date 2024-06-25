@@ -4,7 +4,6 @@ import { getServices } from '@/services/getServices';
 
 const Services = async () => {
     const services = await getServices();
-    console.log(services);
 
     return (
         <div className='container mx-auto mb-20'>
