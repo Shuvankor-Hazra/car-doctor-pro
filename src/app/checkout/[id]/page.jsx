@@ -28,7 +28,7 @@ const CheckoutPage = ({ params }) => {
             serviceId: _id,
         }
 
-        const resp = await fetch('https://car-doctor-pro-nine.vercel.app/checkout/api/new-booking', {
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkout/api/new-booking`, {
             method: 'POST',
             body: JSON.stringify(newBooking),
             headers : {
