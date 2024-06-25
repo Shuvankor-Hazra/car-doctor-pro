@@ -1,6 +1,5 @@
 'use client'
 import { getServicesDetails } from '@/services/getServices';
-import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
@@ -27,10 +26,16 @@ const CheckoutPage = ({ params }) => {
             date: e.target.date.value,
             serviceTitle: title,
             serviceId: _id,
-
         }
-        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout/api/new-booking`, newBooking);
-        const response = await resp.data;
+
+        const resp = await fetch('https://car-doctor-pro-nine.vercel.app/checkout/api/new-booking', {
+            method: 'POST',
+            body: JSON.stringify(newBooking),
+            headers : {
+                "content-type" : "application/json"
+            }
+        })
+        const response = await resp?.json();
         Swal.fire({
             icon: "success",
             title: "Your booking has been saved",

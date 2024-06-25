@@ -1,5 +1,5 @@
 'use client'
-import axios from 'axios';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -16,7 +16,13 @@ const SignUpPage = () => {
             email: e.target.email.value,
             password: e.target.password.value,
         }
-        const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/signup/api`, newUser)
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup/api`, {
+            method: "POST",
+            body: JSON.stringify(newUser),
+            headers: {
+                "content-type": "application/json",
+            },
+        })
         if (resp.status === 200) {
             e.target.reset();
             router.push('/')

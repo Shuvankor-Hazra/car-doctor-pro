@@ -3,23 +3,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import SocialSignin from '@/components/shared/SocialSignin';
 import Swal from 'sweetalert2';
 
 const Page = () => {
     const searchParams = useSearchParams();
-    const router = useRouter()
     const path = searchParams.get('redirect')
     const handleLogin = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
         const resp = await signIn('credentials', {
-            email, password, redirect: true, callbackUrl: path ? path : '/',
+            email,
+            password,
+            redirect: true,
+            callbackUrl: path ? path : '/',
         })
         if (resp.status === 200) {
-            router.push('/')
             Swal.fire({
                 icon: "success",
                 title: "Sign In Successful",

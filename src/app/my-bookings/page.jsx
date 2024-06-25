@@ -1,5 +1,5 @@
 'use client'
-import axios from 'axios';
+
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,8 +10,8 @@ const Page = () => {
     const session = useSession();
     const [myBookings, setMyBookings] = useState([]);
     const loadData = async () => {
-        const resp = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/${session?.data?.user?.email}`)
-        const data = await resp.data;
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/${session?.data?.user?.email}`)
+        const data = await resp.json();
         setMyBookings(data);
     }
 
@@ -26,9 +26,11 @@ const Page = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const deleted = await axios.delete(
-                    `${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/booking/${id}`)
-                const resp = await deleted.data;
+                const deleted = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/my-bookings/api/booking/${id}`,{
+                        method: "DELETE",
+                    })
+                const resp = await deleted.json();
                 if (resp?.response?.deletedCount > 0) {
                     loadData();
                     Swal.fire({
