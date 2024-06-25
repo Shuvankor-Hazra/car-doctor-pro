@@ -1,21 +1,22 @@
 "use client"
 
 import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const SocialSignin = () => {
-    // const searchParams = useSearchParams();
-    // const path = searchParams.get('redirect')
-    const session = useSession();
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const path = searchParams.get('redirect')
+    const session = useSession();
+
     const handleSocialLogin = (provider) => {
         const resp = signIn(provider,
             { 
-                redirect: false, 
-                // callbackUrl: path ? path : '/', 
+                redirect: true, 
+                callbackUrl: path ? path : '/', 
             });
     }
     if (session.status === "authenticated") {
