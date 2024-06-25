@@ -3,13 +3,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { signIn } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import SocialSignin from '@/components/shared/SocialSignin';
 import Swal from 'sweetalert2';
 
 const Page = () => {
-    const searchParams = useSearchParams();
-    const path = searchParams.get('redirect')
+    // const searchParams = useSearchParams();
+    // const path = searchParams.get('redirect')
     const handleLogin = async (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -17,8 +17,8 @@ const Page = () => {
         const resp = await signIn('credentials', {
             email,
             password,
-            redirect: true,
-            callbackUrl: path ? path : '/',
+            redirect: false,
+            // callbackUrl: path ? path : '/',
         })
         if (resp.status === 200) {
             Swal.fire({
